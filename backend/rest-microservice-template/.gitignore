@@ -1,0 +1,15 @@
+# Files to ignore
+
+## IDE related files
+.idea/
+*.iml
+
+## Build system related files
+.gradle/
+build/
+
+## Logs
+logs/
+
+## Misc files that you want to ignore
+original-project/

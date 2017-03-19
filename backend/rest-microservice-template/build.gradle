@@ -1,0 +1,20 @@
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url'http://nexus.4finance.net/content/groups/public/' }
+    }
+
+    checkstyle {
+        toolVersion = checkstyleVersion
+        configFile = rootProject.file('checkstyle.xml')
+    }
+}

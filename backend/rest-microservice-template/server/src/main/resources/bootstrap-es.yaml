@@ -1,0 +1,11 @@
+spring.application.name: pos-data-provider
+
+spring.cloud.zookeeper:
+  prefix: io/fourfinanceit/
+  enabled: true
+  discovery:
+    enabled: true
+    root: /es
+  dependency:
+    enabled: true
+    resttemplate.enabled: false

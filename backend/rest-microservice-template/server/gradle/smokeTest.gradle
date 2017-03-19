@@ -1,0 +1,21 @@
+configurations {
+    smokeTestCompile.extendsFrom testCompile
+    smokeTestRuntime.extendsFrom testRuntime
+}
+
+sourceSets {
+    smokeTest {
+        groovy.srcDir file('src/test/smoke/groovy')
+        resources.srcDir file('src/test/smoke/resources')
+        compileClasspath = sourceSets.main.output + sourceSets.test.output + configurations.smokeTestCompile
+        runtimeClasspath = output + compileClasspath + configurations.smokeTestRuntime
+    }
+}
+
+task smokeTest(type: Test) {
+    testClassesDir = sourceSets.smokeTest.output.classesDir
+    classpath = sourceSets.smokeTest.runtimeClasspath
+    systemProperties['smokeTestAppUrl'] = System.properties['smokeTestAppUrl']
+    reports.html.destination = file("${reporting.baseDir}/smoke")
+    reports.junitXml.destination = file("${testResultsDir}/smoke")
+}

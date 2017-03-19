@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# cp templa to $1
+# echo >> settings form name
+
+# usage: c-m {name}

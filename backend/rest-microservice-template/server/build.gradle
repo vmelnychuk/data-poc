@@ -1,0 +1,103 @@
+plugins {
+    id 'org.springframework.boot' version '1.4.3.RELEASE'
+    id 'java'
+    id 'groovy'
+    id 'maven-publish'
+}
+
+// Publishing section -- start
+
+group groupName
+jar { baseName = artifactName }
+version = project.hasProperty( 'currentVersion' ) ? currentVersion : artifactVersion + new Date().format("-yyyyMMddHHmmss").toString()
+
+task bootRunDev(type: org.springframework.boot.gradle.run.BootRunTask) {
+    group = 'Application'
+    main = 'io.fourfinance.pos.dataprovider.Main'
+    doFirst() {
+        classpath = sourceSets.main.runtimeClasspath
+        systemProperty 'APP_ENV', 'dev'
+        systemProperty 'CONFIG_FOLDER', 'properties'
+        systemProperty 'spring.profiles.active', 'dev'
+        systemProperty 'spring.cloud.bootstrap.name', 'bootstrap'
+    }
+}
+
+task run(dependsOn: bootRunDev)
+
+task debug(type: org.springframework.boot.gradle.run.BootRunTask) {
+    group = 'Application'
+    main = 'io.fourfinance.pos.dataprovider.Main'
+    doFirst() {
+        classpath = sourceSets.main.runtimeClasspath
+        systemProperty 'APP_ENV', 'dev'
+        systemProperty 'CONFIG_FOLDER', 'properties'
+        systemProperty 'spring.profiles.active', 'dev'
+        systemProperty 'spring.cloud.bootstrap.name', 'bootstrap'
+    }
+    args '--debug'
+}
+
+publishing {
+    repositories {
+        maven {
+            url project.findProperty('mavenRepoUrl')
+            credentials {
+                username project.findProperty('mavenUser')
+                password project.findProperty('mavenPassword')
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId artifactName
+            from components.java
+        }
+    }
+}
+
+bootRepackage { withJarTask = "jar" }
+bootRun { systemProperties System.properties }
+project.tasks.findAll { it.name.startsWith('publish') }*.dependsOn { bootRepackage }
+
+// Publishing section -- end
+
+repositories {
+    jcenter()
+    maven { url 'https://nexus.4finance.net/content/groups/public/' }
+}
+
+dependencies {
+    // Sub-modules
+    compile project(":api")
+
+    // CompileOnly
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+    // Compile
+    compile "org.springframework.boot:spring-boot-starter-jersey"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "io.fourfinanceit.pos.gateway:gateway-events:$posGatewayEventsVersion"
+    compile "org.springframework.cloud:spring-cloud-starter-zookeeper-discovery:$springCloudStarterZookeeperDiscoveryVersion"
+    compile "io.fourfinanceit.infrastructure:spring-cloud-zookeeper-properties-locator:$springCloudZookeeperPropertiesLocatorVersion"
+    compile "org.springframework.cloud:spring-cloud-context:$springCloudContextVersion"
+    compile "org.springframework.cloud:spring-cloud-config-server:$springCloudConfigServerVersion"
+    compile "io.reactivex:rxjava:$javaRxVersion"
+    compile "org.postgresql:postgresql:$postgresqlVersion"
+    compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+    compile "org.freemarker:freemarker:$freemarkerVersion"
+
+    // TestCompile
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.spockframework:spock-core:$spockVersion"
+
+    // TestRuntime
+    testRuntime "cglib:cglib-nodep:$cglibVersion"
+    testRuntime "org.objenesis:objenesis:$objenesisVersion"
+}
+
+// Smoke dummy test
+task smokeTest(type: Test) {
+    println 'smoke tests are done.'
+}

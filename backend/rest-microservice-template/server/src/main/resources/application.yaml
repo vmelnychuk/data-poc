@@ -1,0 +1,23 @@
+spring.application.name: pos-data-provider
+
+server.port: 8389
+
+spring.jersey.type: filter
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      format_sql: false
+      ddl-auto: none
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/pos-gateway
+    username: pos-frontend
+    password: pos-frontend
+
+    hikari:
+      connection-test-query: SELECT 1
+      minimum-idle: 1
+      maximum-pool-size: 10

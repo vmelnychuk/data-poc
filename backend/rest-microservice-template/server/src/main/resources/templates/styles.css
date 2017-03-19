@@ -1,0 +1,24 @@
+.application-details-wrapper {
+    overflow: auto;
+    height: 100%;
+    margin-left: 40px;
+}
+
+
+.history-order-conainer {
+    display: inline-block;
+}
+
+.history-order-item {
+    border: solid black 1px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.order-items-table {
+    margin-top: 5px;
+}
+
+.order-items-table th, .order-items-table td {
+    padding: 0 5px;
+}

@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group groupName
+jar { baseName = artifactName }
+version = artifactVersion + new Date().format("-yyyyMMddHHmmss").toString()
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile "javax.ws.rs:javax.ws.rs-api:$jaxRsVersion"
+}
