@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 <module name = "Checker">
-
-    <!--
-        IMPORTANT: READ THIS BEFORE CHANGING THIS FILE
-
-        1.  Adding a new checkstyle rule requires FULL CONSENSUS. Every developer on the team should
-            be added as reviewer to pull request and explicitly approve it.
-            The same applies for changing rule configuration (except for bumping severity)
-        2.  However to disable a rule, 2/3 majority is enough. Every developer still should be
-            added as reviewer to PR, so that he is aware of the change and can voice his opinion.
-        3.  Bumping severity from warning to error does not require.
-        4.  Any change in this file must be done in a dedicated pull request - no source files
-            should be added. Therefore when new rule is added while violations still exist in
-            code, the process should be as follows:
-             - In the first pull request, rule is added with "warning" severity
-             - In one or more pull request, violations are cleaned from the codebase
-             - Rule severity is bumped to "error" in a dedicated PR. Such PR does not require extra
-               reviewers, consensus is considered expressed when the rule was originally added.
-    -->
-
+    
     <!-- Default severity of rules is error. Newly created rules should be added with warning -->
     <property name="severity" value="error"/>
 

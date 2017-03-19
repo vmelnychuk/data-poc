@@ -13,5 +13,5 @@ repositories {
 }
 
 dependencies {
-    compile "javax.ws.rs:javax.ws.rs-api:$jaxRsVersion"
+    compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', versoin: jaxRs
 }
